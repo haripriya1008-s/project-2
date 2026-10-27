@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b1020">
+  <title>Hello, World! — C in a nutshell</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap');
+    :root{color-scheme:dark;--ink:#f4f5ff;--muted:#9ba3bd;--violet:#a78bfa;--cyan:#67e8f9}
+    *{box-sizing:border-box}
+    body{margin:0;min-height:100vh;color:var(--ink);font-family:Manrope,system-ui,sans-serif;background:radial-gradient(ellipse at 16% 8%,#282151 0,transparent 38%),radial-gradient(ellipse at 89% 85%,#103747 0,transparent 35%),#0b1020;overflow-x:hidden}
+    body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.18;background-image:linear-gradient(#ffffff08 1px,transparent 1px),linear-gradient(90deg,#ffffff08 1px,transparent 1px);background-size:52px 52px;mask-image:linear-gradient(to bottom,black,transparent 85%)}
+    .wrap{width:min(1080px,calc(100% - 40px));margin:auto;position:relative}
+    header{height:86px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #ffffff14}
+    .brand{display:flex;align-items:center;gap:11px;font-size:14px;font-weight:800;letter-spacing:.02em}.brand-icon{width:34px;height:34px;border-radius:11px;display:grid;place-items:center;color:#121329;background:linear-gradient(135deg,var(--cyan),var(--violet));font:700 15px 'DM Mono',monospace;box-shadow:0 0 30px #a78bfa44}
+    .tag{border:1px solid #ffffff1c;padding:7px 11px;border-radius:999px;color:#b8c2d9;font:11px 'DM Mono',monospace;letter-spacing:.08em;text-transform:uppercase}
+    main{padding:76px 0 64px}.eyebrow{display:flex;align-items:center;gap:9px;color:#b4a5ff;font:12px 'DM Mono',monospace;letter-spacing:.13em;text-transform:uppercase}.dot{height:7px;width:7px;border-radius:50%;background:#79f5d2;box-shadow:0 0 12px #79f5d2}
+    h1{font-size:clamp(48px,8vw,88px);line-height:.98;letter-spacing:-.075em;margin:22px 0 20px;font-weight:800}.gradient{background:linear-gradient(100deg,#fff 18%,#b9a5ff 62%,#76e8f3);-webkit-background-clip:text;background-clip:text;color:transparent}.intro{max-width:590px;color:#aeb6cc;font-size:17px;line-height:1.75;margin:0}
+    .grid{display:grid;grid-template-columns:1.35fr .8fr;gap:22px;margin-top:46px;align-items:stretch}.card{border:1px solid #ffffff1b;border-radius:20px;background:linear-gradient(145deg,#171d32e8,#101626e8);box-shadow:0 24px 80px #0004;overflow:hidden;backdrop-filter:blur(12px)}
+    .editor-head{height:54px;border-bottom:1px solid #ffffff12;display:flex;align-items:center;justify-content:space-between;padding:0 19px;color:#aeb6cc;font:12px 'DM Mono',monospace}.dots{display:flex;gap:6px}.dots i{width:8px;height:8px;border-radius:50%;background:#ff7185}.dots i:nth-child(2){background:#f3ca65}.dots i:nth-child(3){background:#65dfaa}.filename{margin-left:12px;flex:1}.lang{color:#8590aa}
+    pre{margin:0;padding:22px 24px 26px;overflow:auto;font:14px/1.9 'DM Mono',monospace;color:#dce4ff}.ln{display:inline-block;width:31px;color:#606b85;user-select:none}.pp{color:#bc9aff}.kw{color:#79d9ff}.fn{color:#f5cf7b}.str{color:#92e6b3}.num{color:#ffa4ba}
+    .output{margin:0 19px 19px;padding:15px 17px;border-radius:12px;background:#0a101d;border:1px solid #ffffff12}.output-label{font:10px 'DM Mono',monospace;color:#74819f;letter-spacing:.12em;text-transform:uppercase;margin-bottom:9px}.output-line{font:13px 'DM Mono',monospace;color:#9ef3cd}.prompt{color:#818da8;margin-right:9px}
+    .side{padding:24px;display:flex;flex-direction:column}.side-kicker{font:11px 'DM Mono',monospace;letter-spacing:.13em;text-transform:uppercase;color:#8290ac}.side h2{font-size:23px;letter-spacing:-.04em;margin:12px 0 9px}.side p{margin:0;color:#a5aec4;font-size:14px;line-height:1.7}.steps{margin-top:21px;display:grid;gap:13px}.step{display:flex;gap:12px;align-items:flex-start;color:#d5dbeb;font-size:13px;line-height:1.5}.step b{display:grid;place-items:center;flex:0 0 23px;height:23px;border-radius:8px;background:#a78bfa1c;color:#c1adff;font:11px 'DM Mono',monospace}.tip{margin-top:auto;padding-top:24px;color:#8792ac;font-size:12px;line-height:1.6}.tip strong{color:#b8c3da;font-weight:600}
+    footer{border-top:1px solid #ffffff14;padding:19px 0 28px;color:#77829b;font:11px 'DM Mono',monospace;display:flex;justify-content:space-between;gap:20px}.footer-mark{color:#9c8cff}
+    @media(max-width:760px){main{padding-top:55px}.grid{grid-template-columns:1fr}.side{min-height:280px}h1{font-size:clamp(48px,13vw,72px)}}@media(max-width:480px){.wrap{width:calc(100% - 28px)}header{height:70px}.tag{font-size:9px}pre{padding:18px 14px;font-size:12px}.ln{width:24px}.editor-head{padding:0 14px}.output{margin:0 12px 13px}}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header><div class="brand"><span class="brand-icon">C</span><span>tiny programs</span></div><span class="tag">your first C program</span></header>
+    <main>
+      <div class="eyebrow"><span class="dot"></span> A small beginning</div>
+      <h1><span class="gradient">Hello,</span><br>World!</h1>
+      <p class="intro">Every great program starts somewhere. Here’s a classic first step in C: a few lines of code, one familiar message, and a whole world of possibilities.</p>
+      <section class="grid" aria-label="C program and explanation">
+        <article class="card">
+          <div class="editor-head"><span class="dots"><i></i><i></i><i></i></span><span class="filename">hello.c</span><span class="lang">C&nbsp; / &nbsp;source</span></div>
+          <pre aria-label="C source code"><code><span class="ln">1</span><span class="pp">#include</span> <span class="str">&lt;stdio.h&gt;</span>
+<span class="ln">2</span>
+<span class="ln">3</span><span class="kw">int</span> main(<span class="kw">void</span>) {
+<span class="ln">4</span>    <span class="fn">printf</span>(<span class="str">"Hello, World!\n"</span>);
+<span class="ln">5</span>    <span class="kw">return</span> <span class="num">0</span>;
+<span class="ln">6</span>}</code></pre>
+          <div class="output"><div class="output-label">program output</div><div class="output-line"><span class="prompt">›</span>Hello, World!</div></div>
+        </article>
+        <aside class="card side">
+          <div class="side-kicker">The idea</div><h2>Small code. Big start.</h2>
+          <p>This program asks the computer to print a message, then reports that it finished successfully.</p>
+          <div class="steps"><div class="step"><b>01</b><span><code>stdio.h</code> gives us access to <code>printf</code>.</span></div><div class="step"><b>02</b><span><code>main</code> is where the program begins.</span></div><div class="step"><b>03</b><span><code>return 0</code> signals a successful finish.</span></div></div>
+          <div class="tip"><strong>Try it:</strong> save the code as <code>hello.c</code>, compile it with a C compiler, and run it.</div>
+        </aside>
+      </section>
+    </main>
+    <footer><span>ONE MESSAGE, ENDLESS POSSIBILITIES</span><span class="footer-mark">made with curiosity ✦</span></footer>
+  </div>
+</body>
+</html>
